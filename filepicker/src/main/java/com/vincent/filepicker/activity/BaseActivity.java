@@ -1,6 +1,7 @@
 package com.vincent.filepicker.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -63,6 +64,11 @@ public abstract class BaseActivity extends AppCompatActivity implements EasyPerm
      */
     @AfterPermissionGranted(RC_READ_EXTERNAL_STORAGE)
     private void readExternalStorage() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permissionGranted();
+            return;
+        }
+
         boolean isGranted = EasyPermissions.hasPermissions(this, "android.permission.READ_EXTERNAL_STORAGE");
         if (isGranted) {
             permissionGranted();

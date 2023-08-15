@@ -1,0 +1,12 @@
+<resources>
+    <string name="vw_confirm">Hotovo</string>
+    <string name="vw_no_video_play_app">Není aplikace pro přehrání videa!</string>
+    <string name="vw_record_audio">Record Audio</string>
+    <string name="vw_rationale_storage">Pro výběr je potřebe oprávnění ke čtení médií.</string>
+    <string name="vw_up_to_max">Dosažen maximální limit</string>
+    <string name="vw_no_photo_app">Není aplikace pro zobrazení fotografií!</string>
+    <string name="vw_no_audio_play_app">Není aplikace pro přehrání audio souborů!</string>
+    <string name="vw_no_video_app">Není žádná video aplikace!</string>
+    <string name="vw_no_audio_app">Není žádná audio aplikace!</string>
+    <string name="vw_all">Vše</string>
+</resources>

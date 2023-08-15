@@ -1,5 +1,6 @@
 package com.vincent.filepicker.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public abstract class BaseActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
     private static final int RC_READ_EXTERNAL_STORAGE = 123;
+    private static final int RC_READ_VIDEO = 124;
     private static final String TAG = BaseActivity.class.getName();
 
     protected FolderListHelper mFolderHelper;
@@ -65,16 +67,25 @@ public abstract class BaseActivity extends AppCompatActivity implements EasyPerm
     @AfterPermissionGranted(RC_READ_EXTERNAL_STORAGE)
     private void readExternalStorage() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            permissionGranted();
-            return;
-        }
-
-        boolean isGranted = EasyPermissions.hasPermissions(this, "android.permission.READ_EXTERNAL_STORAGE");
-        if (isGranted) {
-            permissionGranted();
+            if (this instanceof VideoPickActivity){
+                boolean isGranted = EasyPermissions.hasPermissions(this, Manifest.permission.READ_MEDIA_VIDEO);
+                if (isGranted) {
+                    permissionGranted();
+                } else {
+                    EasyPermissions.requestPermissions(this, getString(R.string.vw_rationale_storage),
+                            RC_READ_VIDEO, Manifest.permission.READ_MEDIA_VIDEO);
+                }
+            } else {
+                permissionGranted();
+            }
         } else {
-            EasyPermissions.requestPermissions(this, getString(R.string.vw_rationale_storage),
-                    RC_READ_EXTERNAL_STORAGE, "android.permission.READ_EXTERNAL_STORAGE");
+            boolean isGranted = EasyPermissions.hasPermissions(this, "android.permission.READ_EXTERNAL_STORAGE");
+            if (isGranted) {
+                permissionGranted();
+            } else {
+                EasyPermissions.requestPermissions(this, getString(R.string.vw_rationale_storage),
+                        RC_READ_EXTERNAL_STORAGE, "android.permission.READ_EXTERNAL_STORAGE");
+            }
         }
     }
 
